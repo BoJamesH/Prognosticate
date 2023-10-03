@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class Elim_Pick(db.Model):
-    __tablename__ = 'elim_picks'
+class Spread_Bet(db.Model):
+    __tablename__ = 'spread_bets'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -12,8 +12,10 @@ class Elim_Pick(db.Model):
     week = db.Column(db.Integer)
     game_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('games.id')))
     selected_team_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('teams.id')))
-    open = db.Column(db.Boolean, default=True)
-    win = db.Boolean(db.Boolean)
+    progs_wagered = db.Column(db.Integer)
+    open = db.Column(db.Boolean, default=False)
+    win = db.Boolean(db.Boolean, default=False)
+    paid = db.Boolean(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -24,8 +26,10 @@ class Elim_Pick(db.Model):
             'week': self.week,
             'game_id': self.game_id,
             'selected_team_id': self.selected_team_id,
+            'progs_wagered': self.progs_wagered,
             'open': self.open,
             'win': self.win,
+            'paid': self.paid,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }

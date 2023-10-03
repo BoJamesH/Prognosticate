@@ -20,6 +20,7 @@ class Game(db.Model):
     over_under = db.Column(db.Integer)
     over_odds = db.Column(db.Integer)
     under_odds = db.Column(db.Integer)
+    finished = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -38,6 +39,7 @@ class Game(db.Model):
             'over_under': self.over_under,
             'over_odds': self.over_odds,
             'under_odds': self.under_odds,
+            'finished': self.finished,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
         }
