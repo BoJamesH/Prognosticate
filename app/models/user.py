@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 
 
 class User(db.Model, UserMixin):
@@ -13,6 +14,19 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_image = db.Column(db.String(1000), nullable=True)
+    prognosticoins = db.Column(db.Integer())
+    pick_wins = db.Column(db.Integer())
+    pick_losses = db.Column(db.Integer())
+    pick_ties = db.Column(db.Integer())
+    elim_wins = db.Column(db.Integer())
+    elim_losses = db.Column(db.Integer())
+    elim_ties = db.Column(db.Integer())
+    sp_elim_wins = db.Column(db.Integer())
+    sp_elim_losses = db.Column(db.Integer())
+    sp_elim_pushes = db.Column(db.Integer())
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @property
     def password(self):
@@ -29,5 +43,19 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'profile_image': self.profile_image,
+            'prognosticoins': self.prognosticoins,
+            'pick_wins': self.pick_wins,
+            'pick_losses': self.pick_losses,
+            'pick_ties': self.pick_ties,
+            'elim_wins': self.elim_wins,
+            'elim_losses': self.elim_losses,
+            'elim_ties': self.elim_ties,
+            'sp_elim_wins': self.sp_elim_wins,
+            'sp_elim_losses': self.sp_elim_losses,
+            'sp_elim_pushes': self.sp_elim_pushes,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+
         }
